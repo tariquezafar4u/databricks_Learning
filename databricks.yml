@@ -1,0 +1,28 @@
+bundle:
+  name: databricks_Learning
+
+include:
+  - resources/*.yml
+
+sync:
+  paths:
+    - ./src/notebooks
+
+targets:
+  # 1. VS Code Developer Mode (personal isolated sandbox)
+  # Deploys under /Workspace/Users/<your-email>/.bundle/databricks_Learning/vscodedev
+  # Prefixes job names with [dev <your_user_prefix>]
+  vscodedev:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-7405618722921759.19.azuredatabricks.net
+
+  # 2. Shared DEV Mode (team shared deployment)
+  # Deploys under /Workspace/Shared/databricks_Learning
+  # Deploys standard non-prefixed job names
+  dev:
+    mode: production
+    workspace:
+      host: https://adb-7405618722921759.19.azuredatabricks.net
+      root_path: /Workspace/Shared/${bundle.name}

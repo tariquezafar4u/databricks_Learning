@@ -1,0 +1,9 @@
+resources:
+  jobs:
+    practice_job:
+      name: practice_job
+      tasks:
+        - task_key: run_practice_notebook
+          notebook_task:
+            notebook_path: ../src/notebooks/*
+            source: WORKSPACE
