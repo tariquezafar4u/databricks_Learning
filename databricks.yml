@@ -8,6 +8,16 @@ sync:
   paths:
     - ./src/notebooks
 
+variables:
+  source_volume_path:
+    description: "Source Unity Catalog Volume path where files land"
+    default: /Volumes/gizmobox/databricks_learning/src
+
+  target_volume_path:
+    description: "Target Unity Catalog Volume path where files get copied"
+    default: /Volumes/gizmobox/databricks_learning/tgt
+
+
 targets:
   # 1. VS Code Developer Mode (personal isolated sandbox)
   # Deploys under /Workspace/Users/<your-email>/.bundle/databricks_Learning/vscodedev

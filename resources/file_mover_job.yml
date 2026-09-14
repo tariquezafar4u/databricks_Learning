@@ -1,0 +1,27 @@
+resources:
+  jobs:
+    file_mover_trigger_job:
+      name: file_mover_trigger_job
+      description: "Triggered whenever a new file is uploaded to the source volume; copies to target."
+      
+      trigger:
+        file_arrival:
+          url: "${var.source_volume_path}"
+          min_time_between_triggers_seconds: 60
+          wait_after_last_change_seconds: 10
+
+      parameters:
+        - name: source_path
+          default: "${var.source_volume_path}"
+        - name: target_path
+          default: "${var.target_volume_path}"
+
+      tasks:
+        - task_key: copy_source_to_target
+          notebook_task:
+            notebook_path: ../src/notebooks/move_files.py
+            source: WORKSPACE
+            base_parameters:
+              source_path: "{{job.parameters.source_path}}"
+              target_path: "{{job.parameters.target_path}}"
+              trigger_file_path: "{{event.file_arrival.url}}"
