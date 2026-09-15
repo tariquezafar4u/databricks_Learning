@@ -11,11 +11,11 @@ sync:
 variables:
   source_volume_path:
     description: "Source Unity Catalog Volume path where files land"
-    default: /Volumes/databricks_learning_catalog/landing/src
+    default: /Volumes/databricks_learning_catalog/landing/source
 
   target_volume_path:
     description: "Target Unity Catalog Volume path where files get copied"
-    default: /Volumes/databricks_learning_catalog/landing/tgt
+    default: /Volumes/databricks_learning_catalog/landing/target
 
 
 targets:
@@ -27,6 +27,7 @@ targets:
     default: true
     workspace:
       host: https://adb-7405614984857704.4.azuredatabricks.net
+      profile: vscodedev
 
   # 2. Shared DEV Mode (team shared deployment)
   # Deploys under /Workspace/Shared/databricks_Learning
@@ -36,3 +37,4 @@ targets:
     workspace:
       host: https://adb-7405614984857704.4.azuredatabricks.net
       root_path: /Workspace/Shared/${bundle.name}
+      profile: vscodedev

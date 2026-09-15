@@ -4,11 +4,13 @@ resources:
       name: file_mover_trigger_job
       description: "Triggered whenever a new file is uploaded to the source volume; copies to target."
       
+
       trigger:
+        pause_status: UNPAUSED
         file_arrival:
-          url: "${var.source_volume_path}"
+          url: "${var.source_volume_path}/"
           min_time_between_triggers_seconds: 60
-          wait_after_last_change_seconds: 10
+          wait_after_last_change_seconds: 120
 
       parameters:
         - name: source_path
