@@ -11,11 +11,11 @@ sync:
 variables:
   source_volume_path:
     description: "Source Unity Catalog Volume path where files land"
-    default: /Volumes/gizmobox/databricks_learning/src
+    default: /Volumes/databricks_learning_catalog/landing/src
 
   target_volume_path:
     description: "Target Unity Catalog Volume path where files get copied"
-    default: /Volumes/gizmobox/databricks_learning/tgt
+    default: /Volumes/databricks_learning_catalog/landing/tgt
 
 
 targets:
@@ -26,7 +26,7 @@ targets:
     mode: development
     default: true
     workspace:
-      host: https://adb-7405618722921759.19.azuredatabricks.net
+      host: https://adb-7405614984857704.4.azuredatabricks.net
 
   # 2. Shared DEV Mode (team shared deployment)
   # Deploys under /Workspace/Shared/databricks_Learning
@@ -34,5 +34,5 @@ targets:
   dev:
     mode: production
     workspace:
-      host: https://adb-7405618722921759.19.azuredatabricks.net
+      host: https://adb-7405614984857704.4.azuredatabricks.net
       root_path: /Workspace/Shared/${bundle.name}
