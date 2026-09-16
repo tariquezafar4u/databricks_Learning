@@ -17,6 +17,21 @@ variables:
     description: "Target Unity Catalog Volume path where files get copied"
     default: /Volumes/databricks_learning_catalog/landing/target
 
+  raw_catalog_name:
+    description: "Unity Catalog name for the raw database"
+    default: databricks_learning_catalog
+
+  raw_schema_name:
+    description: "Unity Catalog schema name for the raw database"  
+    default: raw
+
+  raw_table_name:
+    description: "Unity Catalog table name for the raw database"
+    default: raw_employee_data
+
+permissions:
+  - level: CAN_MANAGE
+    group_name: users
 
 targets:
   # 1. VS Code Developer Mode (personal isolated sandbox)
