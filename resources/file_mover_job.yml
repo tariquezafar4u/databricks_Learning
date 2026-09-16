@@ -1,0 +1,39 @@
+resources:
+  jobs:
+    file_mover_trigger_job:
+      name: file_mover_trigger_job
+      description: "Triggered whenever a new file is uploaded to the source volume; copies to target."
+      
+      schedule:
+        quartz_cron_expression: "0 10 22 * * ?"
+        timezone_id: "Asia/Kolkata"
+        pause_status: UNPAUSED
+
+      parameters:
+        - name: source_path
+          default: "${var.source_volume_path}"
+        - name: target_path
+          default: "${var.target_volume_path}"
+        - name: raw_table
+          default: "${var.raw_catalog_name}.${var.raw_schema_name}.${var.raw_table_name}"
+
+      tasks:
+        - task_key: copy_source_to_target
+          notebook_task:
+            notebook_path: ../src/notebooks/move_files.py
+            source: WORKSPACE
+            base_parameters:
+              source_path: "{{job.parameters.source_path}}"
+              target_path: "{{job.parameters.target_path}}"
+          
+        - task_key: load_to_raw
+          depends_on:
+            - task_key: copy_source_to_target
+          notebook_task:
+            notebook_path: ../src/notebooks/load_to_raw.py
+            source: WORKSPACE
+            base_parameters:
+              source_path: "{{job.parameters.target_path}}"
+              raw_table: "{{job.parameters.raw_table}}"
+              file_format: "csv"
+              write_mode: "append"

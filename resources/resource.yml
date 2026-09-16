@@ -5,5 +5,5 @@ resources:
       tasks:
         - task_key: run_practice_notebook
           notebook_task:
-            notebook_path: ../src/notebooks/*
+            notebook_path: ../src/notebooks/practice.ipynb
             source: WORKSPACE
