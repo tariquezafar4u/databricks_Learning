@@ -5,7 +5,7 @@ resources:
       description: "Triggered whenever a new file is uploaded to the source volume; copies to target."
       
       schedule:
-        quartz_cron_expression: "0 10 22 * * ?"
+        quartz_cron_expression: "0 40 17 * * ?"
         timezone_id: "Asia/Kolkata"
         pause_status: UNPAUSED
 
@@ -16,6 +16,8 @@ resources:
           default: "${var.target_volume_path}"
         - name: raw_table
           default: "${var.raw_catalog_name}.${var.raw_schema_name}.${var.raw_table_name}"
+        - name: table_location
+          default: "${var.raw_table_location}"
 
       tasks:
         - task_key: copy_source_to_target
@@ -26,7 +28,7 @@ resources:
               source_path: "{{job.parameters.source_path}}"
               target_path: "{{job.parameters.target_path}}"
           
-        - task_key: load_to_raw
+        - task_key: load_to_external
           depends_on:
             - task_key: copy_source_to_target
           notebook_task:
@@ -37,3 +39,4 @@ resources:
               raw_table: "{{job.parameters.raw_table}}"
               file_format: "csv"
               write_mode: "append"
+              table_location: "{{job.parameters.table_location}}"
