@@ -40,7 +40,7 @@ variables:
 
   stage_schema_name:
     description: "Unity Catalog schema name for the raw database"  
-    default: stage
+    default: external
 
   stage_table_name:
     description: "Unity Catalog table name for the raw database"
@@ -49,6 +49,10 @@ variables:
   reject_table_name:
     description: "Unity Catalog table name for the raw database"
     default: stage_employee_rejected 
+
+  external_location_path:
+    description: "Unity Catalog table location for the raw database"
+    default: 'abfss://databricks-learning@databrickslearningdlext.dfs.core.windows.net/external/'
 
 permissions:
   - level: CAN_MANAGE

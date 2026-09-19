@@ -20,6 +20,9 @@ resources:
           default: "${var.stage_catalog_name}.${var.stage_schema_name}.${var.stage_table_name}"
         - name: reject_table
           default: "${var.stage_catalog_name}.${var.stage_schema_name}.${var.reject_table_name}"
+        - name: external_location
+          default: "${var.external_location_path}"
+                 
 
 
       tasks:
@@ -47,10 +50,11 @@ resources:
           depends_on:
             - task_key: load_to_raw
           notebook_task:
-            notebook_path: ../raw_stg.py
+            notebook_path: ../src/notebooks/raw_to_stage.py
             source: WORKSPACE
             base_parameters:
               source_path: "{{job.parameters.target_path}}"
               raw_table: "{{job.parameters.raw_table}}"
               stage_table: "{{job.parameters.stage_table}}"
               reject_table: "{{job.parameters.reject_table}}"
+              external_location: "{{job.parameters.external_location}}"
