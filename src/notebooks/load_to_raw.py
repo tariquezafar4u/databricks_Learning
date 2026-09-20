@@ -7,12 +7,12 @@ dbutils.widgets.text("source_path", "")
 dbutils.widgets.text("raw_table", "")
 dbutils.widgets.text("file_format", "csv")
 dbutils.widgets.text("write_mode", "append")
-dbutils.widgets.text("table_location", "")
+
 source_path = dbutils.widgets.get("source_path").rstrip("/")
 raw_table = dbutils.widgets.get("raw_table")
 file_format = dbutils.widgets.get("file_format").lower()
 write_mode = dbutils.widgets.get("write_mode").lower()
-table_location = dbutils.widgets.get("table_location")
+
 
 if not source_path or not raw_table:
     raise ValueError("source_path and raw_table are required")
@@ -36,8 +36,7 @@ df = (
     df.write.format("delta")
     .mode(write_mode)
     .option("mergeSchema", "true")
-    .option("path", table_location)
-    .saveAsTable(raw_table)
+      .saveAsTable(raw_table)
 )
 
 dbutils.notebook.exit(f"LOADED {df.count()} rows into {raw_table}")
